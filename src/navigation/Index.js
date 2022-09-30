@@ -8,12 +8,13 @@ const Stack = createNativeStackNavigator();
 
 //screens Import
 import HomeScreen from "../screens/homeScreen/Index";
-
+import InventoryScreen from "../screens/InventoryScreen/Index";
 const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,7 +12,7 @@ var height = Dimensions.get("window").height; //full width
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
 
-const Index = () => {
+const Index = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={{ fontWeight: "bold", fontSize: 20, textAlign: "center" }}>
@@ -63,6 +63,7 @@ const Index = () => {
             borderColor: "black",
             borderRadius: 10,
           }}
+          onPress={() => navigation.navigate("InventoryScreen")}
         >
           <Text style={{ textAlign: "center" }}>Manage Inventory</Text>
         </TouchableOpacity>

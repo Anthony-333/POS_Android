@@ -1,25 +1,33 @@
 module.exports = (sequelize, Sequelize) => {
   const Inventory = sequelize.define("Item", {
-    Item_name: {
+    //data models
+    Item_Code: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notNull: { msg: "Item name is required." },
-      },
+      // allowNull: false,
+      // validate: {
+      //   notNull: { msg: "Item code is required." },
+      // },
     },
-    Item_description: {
+    Item_Name: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notNull: { msg: "Item description is required" },
-      },
+      // allowNull: false,
+      // validate: {
+      //   notNull: { msg: "Item name is required." },
+      // },
     },
-    Item_unitPrice: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: { msg: "Unit price is required" },
-      },
+    Item_Description: {
+      type: Sequelize.STRING,
+      // allowNull: false,
+      // validate: {
+      //   notNull: { msg: "Item description is required" },
+      // },
+    },
+    Item_UnitPrice: {
+      type: Sequelize.FLOAT,
+      // allowNull: false,
+      // validate: {
+      //   notNull: { msg: "Unit price is required" },
+      // },
     },
   });
 

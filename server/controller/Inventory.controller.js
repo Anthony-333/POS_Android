@@ -3,48 +3,53 @@ const Inventory = db.Inventory;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Item
-exports.create = (req, res) => {
-  // Validate request
-  if (
-    !req.body.Item_Code ||
-    !req.body.Item_Name ||
-    !req.body.Item_Description ||
-    !req.body.Item_UnitPrice
-  ) {
-    res.status(400).send({
-      message: "Required Items cannot be blank",
-    });
-    return;
-  }
+exports.create = async (req, res) => {
+  try {
+    const { Item_Code } = req.body;
 
-  //Check if the same item code exist
-  const old_ItemCode = req.params.Item_Code;
-  Inventory.findByPk(old_ItemCode).then(
-    res.status(500).send({
-      message: "Same Item Code exist.",
-    })
-  );
-
-  // Create a Tutorial
-  const InventoryItem = {
-    Item_Code: req.body.Item_Code,
-    Item_Name: req.body.Item_Name,
-    Item_Description: req.body.Item_Description,
-    Item_UnitPrice: req.body.Item_UnitPrice,
-  };
-
-  // Save Tutorial in the database
-  Inventory.create(InventoryItem)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while creating the Inventory Item.",
+    // Validate request
+    if (
+      !req.body.Item_Code ||
+      !req.body.Item_Name ||
+      !req.body.Item_Description ||
+      !req.body.Item_UnitPrice
+    ) {
+      return res.status(400).send({
+        message: "Required Items cannot be blank",
       });
-    });
+    }
+
+    //Detect existing Item
+    const existingUser = await Inventory.findOne({ Item_Code });
+
+    if (existingUser)
+      return res.status(400).json({
+        message: "An Item with this Item Code is already exists.",
+      });
+
+    // Create a Tutorial
+    const InventoryItem = {
+      Item_Code: req.body.Item_Code,
+      Item_Name: req.body.Item_Name,
+      Item_Description: req.body.Item_Description,
+      Item_UnitPrice: req.body.Item_UnitPrice,
+    };
+
+    // Save Tutorial in the database
+    Inventory.create(InventoryItem)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message ||
+            "Some error occurred while creating the Inventory Item.",
+        });
+      });
+  } catch (e) {
+    res.status(500).send(e);
+  }
 };
 
 // Retrieve all Item from the database.

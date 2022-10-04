@@ -3,7 +3,9 @@ const Inventory = db.Inventory;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Item
-exports.create = (req, res) => {};
+exports.create = (req, res) => {
+    
+};
 
 // Retrieve all Item from the database.
 exports.findAll = (req, res) => {};

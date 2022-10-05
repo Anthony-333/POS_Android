@@ -3,53 +3,50 @@ const Inventory = db.Inventory;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Item
-exports.create = async (req, res) => {
-  try {
-    const { Item_Code } = req.body;
+exports.create = (req, res) => {
+  // const { Item_Code } = req.body;
 
-    // Validate request
-    if (
-      !req.body.Item_Code ||
-      !req.body.Item_Name ||
-      !req.body.Item_Description ||
-      !req.body.Item_UnitPrice
-    ) {
-      return res.status(400).send({
-        message: "Required Items cannot be blank",
-      });
-    }
+   // Create a item
+   const InventoryItem = {
+    Item_Code: req.body.Item_Code,
+    Item_Name: req.body.Item_Name,
+    Item_Description: req.body.Item_Description,
+    Item_UnitPrice: req.body.Item_UnitPrice,
+  };
 
-    //Detect existing Item
-    const existingUser = await Inventory.findOne({ Item_Code });
-
-    if (existingUser)
-      return res.status(400).json({
-        message: "An Item with this Item Code is already exists.",
-      });
-
-    // Create a Tutorial
-    const InventoryItem = {
-      Item_Code: req.body.Item_Code,
-      Item_Name: req.body.Item_Name,
-      Item_Description: req.body.Item_Description,
-      Item_UnitPrice: req.body.Item_UnitPrice,
-    };
-
-    // Save Tutorial in the database
-    Inventory.create(InventoryItem)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Some error occurred while creating the Inventory Item.",
-        });
-      });
-  } catch (e) {
-    res.status(500).send(e);
+  // Validate request
+  if (
+    !req.body.Item_Code ||
+    !req.body.Item_Name ||
+    !req.body.Item_Description ||
+    !req.body.Item_UnitPrice
+  ) {
+    res.status(400).send({
+      message: "Required Items cannot be blank",
+    });
+    return;
   }
+
+  // //Check if the same item code exist
+  // const old_ItemCode = req.params.Item_Code;
+  // Inventory.findByPk(old_ItemCode).then(
+  //   res.status(500).send({
+  //     message: "Same Item Code exist.",
+  //   })
+  // );
+
+  // Save Tutorial in the database
+  Inventory.create(InventoryItem)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while creating the Inventory Item.",
+      });
+    });
 };
 
 // Retrieve all Item from the database.
@@ -63,18 +60,18 @@ exports.findAll = (req, res) => {
     .then((data) => {
       res.send(data);
     })
-    .cath((err) => {
+    .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error occured while retrieving tutorials",
       });
     });
 };
 
-// Find a single Item with an id
+// Find a single Item with an Item Code
 exports.findOne = (req, res) => {
-  const Item_Code = req.params.Item_Code;
+  const Item_Code = req.body.Item_Code;
 
-  Inventory.findByPk(Item_Code)
+  Inventory.findOne({ where: { Item_Code: Item_Code}})
     .then((data) => {
       if (data) {
         res.send(data);
@@ -159,14 +156,14 @@ exports.delete = (req, res) => {
 //   };
 
 // Find all published Item
-exports.findAllPublished = (req, res) => {
-  Inventory.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving Items.",
-      });
-    });
-};
+// exports.findAllPublished = (req, res) => {
+//   Inventory.findAll({ where: { published: true } })
+//     .then((data) => {
+//       res.send(data);
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: err.message || "Some error occurred while retrieving Items.",
+//       });
+//     });
+// };

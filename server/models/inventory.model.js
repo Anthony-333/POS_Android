@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     //data models
     Item_Code: {
       type: Sequelize.STRING,
+      unique: true,
       // allowNull: false,
       // validate: {
       //   notNull: { msg: "Item code is required." },

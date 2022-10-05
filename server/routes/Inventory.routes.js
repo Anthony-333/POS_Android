@@ -9,11 +9,8 @@ module.exports = (app) => {
   // Retrieve all items
   router.get("/", Inventory.findAll);
 
-  // Retrieve all published Items
-  router.get("/published", Inventory.findAllPublished);
-
   // Retrieve a single item with id
-  router.get("/:Item_Code", Inventory.findOne);
+  router.get("/Item_Code", Inventory.findOne);
 
   // Update a Item with id
   router.put("/:id", Inventory.update);

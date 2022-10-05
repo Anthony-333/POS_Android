@@ -3,11 +3,11 @@ const Inventory = db.Inventory;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Item
-exports.create = (req, res) => {
-  // const { Item_Code } = req.body;
+exports.create = async (req, res) => {
+  const Item_Code = req.body.Item_Code;
 
-   // Create a item
-   const InventoryItem = {
+  // Create a item
+  const InventoryItem = {
     Item_Code: req.body.Item_Code,
     Item_Name: req.body.Item_Name,
     Item_Description: req.body.Item_Description,
@@ -24,29 +24,30 @@ exports.create = (req, res) => {
     res.status(400).send({
       message: "Required Items cannot be blank",
     });
-    return;
   }
 
   // //Check if the same item code exist
-  // const old_ItemCode = req.params.Item_Code;
-  // Inventory.findByPk(old_ItemCode).then(
-  //   res.status(500).send({
-  //     message: "Same Item Code exist.",
-  //   })
-  // );
-
-  // Save Tutorial in the database
-  Inventory.create(InventoryItem)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while creating the Inventory Item.",
+  const existing = await Inventory.findOne({
+    where: { Item_Code: Item_Code },
+  });
+  if (existing === null) {
+    // Save Tutorial in the database
+    Inventory.create(InventoryItem)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message ||
+            "Some error occurred while creating the Inventory Item.",
+        });
       });
+  } else {
+    res.status(500).send({
+      message: "Item with same Item Code exist",
     });
+  }
 };
 
 // Retrieve all Item from the database.
@@ -71,7 +72,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const Item_Code = req.body.Item_Code;
 
-  Inventory.findOne({ where: { Item_Code: Item_Code}})
+  Inventory.findOne({ where: { Item_Code: Item_Code } })
     .then((data) => {
       if (data) {
         res.send(data);

@@ -22,7 +22,7 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to POS" });
+  res.json({ message: "Welcome to Superspeed" });
 });
 
 require("./routes/Inventory.routes")(app);

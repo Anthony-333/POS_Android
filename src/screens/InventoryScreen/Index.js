@@ -34,7 +34,7 @@ const Index = () => {
             alignItems: "center",
             justifyContent: "center",
             padding: 5,
-            marginHorizontal: 10,
+            marginLeft: 10,
           }}
         >
           <Text style={{ color: "white" }}> Add Item</Text>

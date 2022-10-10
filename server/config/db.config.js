@@ -1,13 +1,15 @@
+const tedious = require("tedious");
+
 module.exports = {
-    HOST: "localhost",
-    USER: "anthony",
-    PASSWORD: "Anthony@123456789",
-    DB: "test",
-    dialect: "mysql",
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
-  };
+  USER: "sa",
+  PASS: "anthonyoling",
+  SERVER: "DESKTOP-8PPU7BJ",
+  DB: "SEANLUC_LIVE",
+  options: {
+    trustedconnection: true,
+    enableArithAbort: true,
+    instancename: "",
+  },
+  port: 49693
+
+};

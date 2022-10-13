@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
     !req.body.Item_UnitPrice
   ) {
     res.status(400).send({
-      message: "Required Items cannot be blank",
+      message: "Required Items cannot be empty",
     });
   }
 
@@ -116,10 +116,10 @@ exports.update = (req, res) => {
 
 // Delete a Item with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const Item_Code = req.params.id;
 
   Inventory.destroy({
-    where: { id: id },
+    where: { Item_Code: Item_Code },
   })
     .then((num) => {
       if (num == 1) {

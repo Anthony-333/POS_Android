@@ -13,10 +13,10 @@ module.exports = (app) => {
   router.get("/Item_Code", Inventory.findOne);
 
   // Update a Item with id
-  router.put("/:id", Inventory.update);
+  router.put("/Item_Code", Inventory.update);
 
   // Delete a item with id
-  router.delete("/:id", Inventory.delete);
+  router.delete("/Item_Code", Inventory.delete);
 
   // Delete all Tutorials
   //   router.delete("/", tutorials.deleteAll);

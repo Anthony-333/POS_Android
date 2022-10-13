@@ -6,7 +6,7 @@ const InventoryListItem = () => {
     {
       id: "1",
       itemCode: "74123",
-      itemName: "Shabuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      itemName: "Shabu",
       itemDesc: "",
     },
     {
@@ -35,6 +35,7 @@ const InventoryListItem = () => {
         borderBottomWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
+      
       }}
     >
       <View
@@ -64,7 +65,7 @@ const InventoryListItem = () => {
         </Text>
       </View>
 
-      <Button title={"Edit"}></Button>
+      <Button title={"Button"}></Button>
     </View>
   );
 

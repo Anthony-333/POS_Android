@@ -4,8 +4,14 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ToastAndroid,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
+
+import { NetCheck } from "../../functions/NetChecker";
 
 var width = Dimensions.get("window").width; //full width
 var height = Dimensions.get("window").height; //full width
@@ -13,6 +19,84 @@ var height = Dimensions.get("window").height; //full width
 import { Ionicons, Entypo } from "@expo/vector-icons";
 
 const Index = ({ navigation }) => {
+  //Time interval of checking internet connection
+  const MINUTE_MS = 10000;
+
+  const [connectionStatus, setConnectionStatus] = useState(false);
+
+  //Check internet Connection
+  useEffect(() => {
+    ToastAndroid.showWithGravity(
+      "Checking Internet.",
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER
+    );
+
+    const interval = setInterval(() => {
+      NetCheck().then((res) => {
+        if (res) {
+          ToastAndroid.showWithGravity(
+            "Connected to Internet.",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
+          setConnectionStatus(true);
+        }
+        if (!res) {
+          ToastAndroid.showWithGravity(
+            "Checking Internet.",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
+
+          setConnectionStatus(false);
+        }
+      });
+    }, MINUTE_MS);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // if (connectionStatus) {
+  //   ToastAndroid.showWithGravity(
+  //     "Connected to Internet.",
+  //     ToastAndroid.SHORT,
+  //     ToastAndroid.CENTER
+  //   );
+  // }
+  // if (!connectionStatus) {
+  //   ToastAndroid.showWithGravity(
+  //     "Checking Internet",
+  //     ToastAndroid.SHORT,
+  //     ToastAndroid.CENTER
+  //   );
+  // }
+
+  // //Check server
+  // const CheckServer = () => {
+  //   axios
+  //     .get("https://3f99-120-28-167-232.ap.ngrok.io/")
+  //     .then(function (response) {
+  //       // handle success
+  //       if (response.data === true) {
+  //         ToastAndroid.showWithGravity(
+  //           "Connected to server.",
+  //           ToastAndroid.LONG,
+  //           ToastAndroid.CENTER
+  //         );
+  //       } else {
+  //         ToastAndroid.showWithGravity(
+  //           "Cannot Reach the server",
+  //           ToastAndroid.LONG,
+  //           ToastAndroid.CENTER
+  //         );
+  //       }
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   CheckServer();
+  // }, []);
   return (
     <View style={styles.container}>
       <Text style={{ fontWeight: "bold", fontSize: 20, textAlign: "center" }}>

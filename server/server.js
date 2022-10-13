@@ -2,6 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const db = require("./models/index.js");
+const sequelize = db.sequelize;
+
 const app = express();
 
 var corsOptions = {
@@ -16,13 +19,20 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./models");
+const { func } = require("prop-types");
 
 db.sequelize.sync();
 
-// simple route
+//Check Database connection
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Superspeed" });
+  sequelize
+    .authenticate()
+    .then(() => {
+      res.send(true);
+    })
+    .catch((err) => {
+      res.send(false);
+    });
 });
 
 require("./routes/Inventory.routes")(app);

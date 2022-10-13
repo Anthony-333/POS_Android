@@ -1,15 +1,15 @@
-const tedious = require("tedious");
-
 module.exports = {
+  HOST: "localhost",
+  PORT: "49693",
   USER: "sa",
-  PASS: "anthonyoling",
-  SERVER: "DESKTOP-8PPU7BJ",
+  PASSWORD: "anthonyoling",
+  // server: "DESKTOP-8PPU7BJ",
   DB: "SEANLUC_LIVE",
-  options: {
-    trustedconnection: true,
-    enableArithAbort: true,
-    instancename: "",
+  dialect: "mssql",
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
   },
-  port: 49693
-
 };

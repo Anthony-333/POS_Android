@@ -1,10 +1,10 @@
-import { View, Text, TextInput, FlatList, Button } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import React from "react";
 
 import { AntDesign } from "@expo/vector-icons";
 import InventoryListItem from "../../components/InventoryListItem/InventoryListItem";
 
-const Index = () => {
+const InventoryScreen = () => {
   return (
     <View>
       <View
@@ -48,4 +48,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default InventoryScreen;

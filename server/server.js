@@ -25,14 +25,13 @@ db.sequelize.sync();
 
 //Check Database connection
 app.get("/", (req, res) => {
-  sequelize
-    .authenticate()
-    .then(() => {
-      res.send(true);
-    })
-    .catch((err) => {
-      res.send(false);
+  try {
+    sequelize.authenticate().then(() => {
+      res.json({ Status: "true" });
     });
+  } catch (error) {
+    res.json({ Status: "false" });
+  }
 });
 
 require("./routes/Inventory.routes")(app);

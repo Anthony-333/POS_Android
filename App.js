@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { View, Dimensions } from "react-native";
-
+import React from "react";
 import Navigation from "./src/navigation/Index";
 
 var width = Dimensions.get("window").width; //full width

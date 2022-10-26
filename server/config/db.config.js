@@ -1,6 +1,6 @@
 module.exports = {
   HOST: "localhost",
-  PORT: "49693",
+  PORT: "49693", // sql server port need to update base on host
   USER: "sa",
   PASSWORD: "anthonyoling",
   // server: "DESKTOP-8PPU7BJ",
